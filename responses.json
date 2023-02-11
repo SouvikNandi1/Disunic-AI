@@ -1,0 +1,25 @@
+{
+    "responses": [
+        {
+            "keywords": [
+                "hello",
+                "hi",
+                "hey"
+            ],
+            "response": "Hello! How can I help you today?"
+        },
+        {
+            "keywords": [
+                "what's up",
+                "what is up"
+            ],
+            "response": "Not much, just here to help. How can I assist you?"
+        },
+        {
+            "keywords": [
+                "how are you"
+            ],
+            "response": "I am an AI language model and do not have emotions or physical sensations. I am designed to assist with answering questions and providing information to the best of my abilities. How may I help you today?"
+        }
+    ]
+}
