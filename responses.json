@@ -19,7 +19,21 @@
             "keywords": [
                 "how are you"
             ],
-            "response": "I am an AI language model and do not have emotions or physical sensations. I am designed to assist with answering questions and providing information to the best of my abilities. How may I help you today?"
+            "response": "I am an AI language model and do not have emotions or physical sensations."
+        },
+        {
+            "keywords": [
+                "disunic"
+            ],
+            "response": "Disunic is a open source project developed by Disunic Corporation. Disunic Working To Make The Advance Web and Software Tecnology.",
+            "link": "https://disunic20.github.io/",
+            "linktitle": "disunic20.github.io"
+        },
+        {
+            "keywords": [
+                "souvik nandi"
+            ],
+            "response": "Souvik Nandi is the Ceo of Disunic Corporation."
         }
     ]
 }

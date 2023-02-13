@@ -2,21 +2,32 @@ $(document).ready(function () {
     // Load JSON file with responses
     $.getJSON("responses.json", function (data) {
         // Set event listener for chat input
+
         $("#chatinput").keypress(function (e) {
-            
+
+            btn.disabled = true;
             timer()
             if (e.which == 13) {
                 var userInput = $("#chatinput").val();
-                $("#chatlog").append("<div class='user'><p>You: " + userInput + "</p></div>");
+                $("#chatlog").append("<div class='user'><i style='font-size:30px' class='bi bi-person'></i><p style='margin-left:10px'>" + userInput + "</p></div>");
                 $("#chatinput").val("");
 
                 // Loop through responses to find a match
                 var foundResponse = false;
                 for (var i = 0; i < data.responses.length; i++) {
                     var keywords = data.responses[i].keywords;
+                    var link = data.responses[i].link;
+                    var linktitle = data.responses[i].linktitle;
                     for (var j = 0; j < keywords.length; j++) {
                         if (userInput.toLowerCase().indexOf(keywords[j]) != -1) {
-                            $("#chatlog").append("<div class='bot'><p class=''>" + data.responses[i].response + "</p></div>");
+
+                            if (link == undefined) {
+                                $("#chatlog").append("<div class='bot'><p class=''>" + data.responses[i].response + "</p></div>");
+                            }
+                            else {
+                                $("#chatlog").append("<div class='bot'><p class=''>" + data.responses[i].response + "</p><div class='link'><a target='_blank' href='" + link + "'>Go to " + linktitle + "</a></div></div>");
+                            }
+
                             timer()
                             document.getElementById("hh1").style.display = "none"
                             foundResponse = true;
@@ -34,41 +45,40 @@ $(document).ready(function () {
                     // $("#chatlog").append("<p class='bot'>I'm sorry, I don't understand your question. Can you rephrase it or provide more information?</p>");
                     opp()
                     function opp() {
-                        const xhr = new XMLHttpRequest();
-                        xhr.open("GET", `https://api.duckduckgo.com/?q=` + userInput + `&format=json`);
-                        xhr.onload = function () {
-                            if (xhr.status === 200) {
+                        // const xhr = new XMLHttpRequest();
+                        // xhr.open("GET", `https://api.duckduckgo.com/?q=` + userInput + `&format=json`);
+                        // xhr.onload = function () {
+                        //     if (xhr.status === 200) {
+                        //         const response = JSON.parse(xhr.responseText);
+                        //         const result = response.Abstract;
 
-                                const response = JSON.parse(xhr.responseText);
-                                const result = response.Abstract;
-                                if (result == "") {
-                                    tyyy()
-                                    document.getElementById("hh1").style.display = "none"
-                                    // $("#chatlog").append("<p class='bot'>I'm sorry, I don't understand your question. Can you rephrase it or provide more information?</p>")
-                                } else {
-                                    $("#chatlog").append("<div class='bot'><p class=''>" + result + "</p></div>");
-                                    timer()
-                                    document.getElementById("hh1").style.display = "none"
-                                }
+                        //             if (result == "") {
+                        //                 tyyy()
+                        //                 document.getElementById("hh1").style.display = "none"
+                        //             } else {
+                        //                 $("#chatlog").append("<div class='bot'><p class=''>" + result + "</p></div>");
+                        //                 timer()
+                        //                 document.getElementById("hh1").style.display = "none"
+                        //             }
 
-                            }
-                            else if (xhr.status === 403) {
-                                console.log("fuck")
-                            }
-                            else {
-                                $("#chatlog").append("<p class='bot'>I'm sorry, I don't understand your question. Can you rephrase it or provide more information?</p>")
-                                // console.log("fuck")
-                                document.getElementById("hh1").style.display = "none"
-                            }
-                        };
-                        xhr.send();
 
+
+                        //     }
+
+                        //     else {
+                        //         $("#chatlog").append("<p class='bot'>I'm sorry, I don't understand your question. Can you rephrase it or provide more information?</p>")
+                        //         // console.log("fuck")
+                        //         document.getElementById("hh1").style.display = "none"
+                        //     }
+                        // };
+                        // xhr.send();
+                        tyyy()
 
                     }
 
                     function tyyy() {
                         timer()
-                        var wikiApiUrl = 'https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&?redirect=fals&gsrnamespace=0&gsrlimit=1&prop=pageimages|extracts&pilimit=max&exintro&pithumbsize=400&explaintext&exsentences=8&exlimit=max&gsrsearch=' + userInput + '&callback=?';
+                        var wikiApiUrl = 'https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&?redirect=fals&gsrnamespace=0&gsrlimit=1&prop=pageimages|extracts&pilimit=max&exintro&pithumbsize=400&explaintext&exsentences=7&exlimit=max&gsrsearch=' + userInput + '&callback=?';
                         $.getJSON(wikiApiUrl, function (articles) {
                             renderArticlesMarkup(articles);
                         });
@@ -87,19 +97,33 @@ $(document).ready(function () {
                                         articlesMarkup += '<div class="article" id="artical"><a id="ra" href="https://en.wikipedia.org/wiki/' + pages[property].title + '" target="_blank">' + '<h2 class="rah" id="rah">' + pages[property].title + '</h2><div class="snippet" id="ras">';
                                         if (pages[property].thumbnail !== undefined) {
                                             articlesMarkup += '<img src="' + pages[property].thumbnail.source + '">';
-                                            $("#chatlog").append("<div class='bot'><img src=" + pages[property].thumbnail.source +"></div>");
+                                            // $("#chatlog").append("<div class='bot'><img src=" + pages[property].thumbnail.source +"></div>");
                                         }
                                         articlesMarkup += '<p>' + pages[property].extract + '</p></div></div></a>';
                                         document.getElementById("hh1").style.display = "none"
-                                        
-                                        $("#chatlog").append("<div class='bot'><p class=''>" + pages[property].extract + "</p></div>");
+                                        $("#chatlog").append("<div class='bot'><p class=''>" + pages[property].extract + "</div>");
+                                        // $("#chatlog").append("<div class='bot'><p class=''>" + pages[property].extract + "</p><div class='link'><a target='_blank' href='https://en.wikipedia.org/wiki/" + pages[property].title + "'>Read More</a></div></div>");
+                                        // var msg = new SpeechSynthesisUtterance(pages[property].extract);
+                                        // window.speechSynthesis.speak(msg);
                                     }
                                 }
                             }
                             $('.result').html(articlesMarkup);
                             timer()
                             document.getElementById("hh1").style.display = "none"
+                            // var msg = new SpeechSynthesisUtterance(pages[property].extract);
+                            // var voices = window.speechSynthesis.getVoices();
+                            // msg.voice = voices[1];
+                            // msg.rate = 1;
+                            // msg.pitch = 1;
+                            // msg.volume = 1;
+                            // window.speechSynthesis.speak(msg);
+                            // op()
+                            // function op(){
+                            //     stopSpeech();
+                            // }
                         }
+
 
 
 
@@ -123,3 +147,4 @@ function timer() {
         El.scrollTo({ top: El.scrollHeight, behavior: 'smooth' });
     }, 50);
 }
+
