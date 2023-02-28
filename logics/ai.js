@@ -1,10 +1,6 @@
 $(document).ready(function () {
-    // Load JSON file with responses
     $.getJSON("responses.json", function (data) {
-        // Set event listener for chat input
-
         $("#chatinput").keypress(function (e) {
-
             btn.disabled = true;
             timer()
             if (e.which == 13) {
@@ -43,38 +39,7 @@ $(document).ready(function () {
                 // If no response is found
                 if (!foundResponse) {
                     // $("#chatlog").append("<p class='bot'>I'm sorry, I don't understand your question. Can you rephrase it or provide more information?</p>");
-                    opp()
-                    function opp() {
-                        // const xhr = new XMLHttpRequest();
-                        // xhr.open("GET", `https://api.duckduckgo.com/?q=` + userInput + `&format=json`);
-                        // xhr.onload = function () {
-                        //     if (xhr.status === 200) {
-                        //         const response = JSON.parse(xhr.responseText);
-                        //         const result = response.Abstract;
-
-                        //             if (result == "") {
-                        //                 tyyy()
-                        //                 document.getElementById("hh1").style.display = "none"
-                        //             } else {
-                        //                 $("#chatlog").append("<div class='bot'><p class=''>" + result + "</p></div>");
-                        //                 timer()
-                        //                 document.getElementById("hh1").style.display = "none"
-                        //             }
-
-
-
-                        //     }
-
-                        //     else {
-                        //         $("#chatlog").append("<p class='bot'>I'm sorry, I don't understand your question. Can you rephrase it or provide more information?</p>")
-                        //         // console.log("fuck")
-                        //         document.getElementById("hh1").style.display = "none"
-                        //     }
-                        // };
-                        // xhr.send();
-                        tyyy()
-
-                    }
+                    tyyy()
 
                     function tyyy() {
                         timer()
@@ -101,39 +66,35 @@ $(document).ready(function () {
                                         }
                                         articlesMarkup += '<p>' + pages[property].extract + '</p></div></div></a>';
                                         document.getElementById("hh1").style.display = "none"
-                                        $("#chatlog").append("<div class='bot'><p class=''>" + pages[property].extract + "</div>");
-                                        // $("#chatlog").append("<div class='bot'><p class=''>" + pages[property].extract + "</p><div class='link'><a target='_blank' href='https://en.wikipedia.org/wiki/" + pages[property].title + "'>Read More</a></div></div>");
-                                        // var msg = new SpeechSynthesisUtterance(pages[property].extract);
-                                        // window.speechSynthesis.speak(msg);
+                                        var opoo = pages[property].extract;
+                                        $("#chatlog").append("<div class='bot'><p id='div_'></div>");
+                                        let newId = "div_";
+                                        let counter = 1;
+                                        while (document.getElementById(newId)) {
+                                            newId = "div_" + counter;
+                                            counter++;
+                                        }
+                                        const myDiv = document.getElementById("div_");
+                                        myDiv.setAttribute("id", newId);
+                                        var i = 0;
+                                        var speed = 40;
+                                        typeWriter()
+                                        function typeWriter() {
+                                            if (i < opoo.length) {
+                                                myDiv.innerHTML += opoo.charAt(i);
+                                                timer()
+                                                i++;
+                                                setTimeout(typeWriter, speed);
+                                            }
+                                        }
                                     }
                                 }
                             }
                             $('.result').html(articlesMarkup);
                             timer()
                             document.getElementById("hh1").style.display = "none"
-                            // var msg = new SpeechSynthesisUtterance(pages[property].extract);
-                            // var voices = window.speechSynthesis.getVoices();
-                            // msg.voice = voices[1];
-                            // msg.rate = 1;
-                            // msg.pitch = 1;
-                            // msg.volume = 1;
-                            // window.speechSynthesis.speak(msg);
-                            // op()
-                            // function op(){
-                            //     stopSpeech();
-                            // }
                         }
-
-
-
-
-
-
-
-
                     }
-
-
                 }
             };
         })

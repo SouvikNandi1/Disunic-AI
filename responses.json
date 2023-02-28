@@ -2,9 +2,7 @@
     "responses": [
         {
             "keywords": [
-                "hello",
-                "hi",
-                "hey"
+                "hello"
             ],
             "response": "Hello! How can I help you today?"
         },
