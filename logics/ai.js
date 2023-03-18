@@ -77,7 +77,7 @@ $(document).ready(function () {
                                         const myDiv = document.getElementById("div_");
                                         myDiv.setAttribute("id", newId);
                                         var i = 0;
-                                        var speed = 40;
+                                        var speed = 80;
                                         typeWriter()
                                         function typeWriter() {
                                             if (i < opoo.length) {
